@@ -18,7 +18,7 @@ function validateName(name) {
         }
         if (word.slice(1) !== word.slice(1).toLowerCase()) {
             return false;
-       }
+        }
     }
     return true;
 }
@@ -33,7 +33,15 @@ function validateEmail(email) {
     if (email.length < 10) {
         return false;
     }
-    if (email.split("@").length !== 2) {
+    let parts = email.split("@")
+    if (parts.length !== 2) {
+        return false;
+    }
+    let [local, domain] = parts;
+    if (local.length < 1 || domain.length < 3) {
+        return false;
+    }
+    if (!domain.includes(".")) {
         return false;
     }
     return true;
@@ -51,7 +59,7 @@ function validateAge(age) {
     if (!/^\d+$/.test(age)) {
         return false;
     }
-    if (age.length === 0) {
+    if (age <= 0) {
         return false;
     }
     if (age.length >= 3) {
@@ -76,7 +84,7 @@ function validatePassword(password) {
         "+",
         "*",
         "/"];
-    let hasSpecial = specialChars.some( char => password.includes(char)
+    let hasSpecial = specialChars.some(char => password.includes(char)
     );
     return hasSpecial;
 }
