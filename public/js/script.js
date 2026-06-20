@@ -88,3 +88,101 @@ function validatePassword(password) {
     );
     return hasSpecial;
 }
+
+// !====================   this is for signing up ( creating a new account )   =========================================
+
+function signUp() {
+
+    // *======================= this is full name======================
+    let fullName;
+    while (true) {
+        fullName = prompt("Enter Full Name");
+        if (fullName === null || fullName.toLowerCase() === "exit") {
+            return;
+        }
+        if (validateName(fullName)) {
+            break;
+        }
+        alert("Invalid Name. Example: Farah El Farouk");
+    }
+
+    // *================================ this is for email =======================================
+    let email;
+    while (true) {
+        email = prompt("Enter your Email");
+        if (email === null || email.toLowerCase() === "exit") {
+            return;
+        }
+        if (!validateEmail(email)) {
+            alert("Invalid Email");
+            continue;
+        }
+        // todo ================================ check if the email already exists =============================
+        if (emailExists(email)) {
+            alert("Email Already Exists");
+            console.log("Email Already Exists");
+            continue;
+        }
+        break;
+    }
+
+    // * ========================================== this is for age ====================================
+
+    let age;
+    while (true) {
+        age = prompt("Enter your Age");
+        if (age === null || age.toLowerCase() === "exit") {
+            return;
+        }
+        if (!validateAge(age)) {
+            alert("Invalid Age");
+            continue;
+        }
+        break;
+    }
+    // * ========================================== this is for password ====================================
+
+    let password;
+    while (true) {
+        password = prompt("Password");
+        if (password === null || password.toLowerCase() === "exit") {
+            return;
+        }
+        if (!validatePassword(password)) {
+            alert("Invalid Password");
+            continue;
+        }
+        break;
+    }
+    // * ========================================== this is for confirm password ====================================
+
+    let confirmPassword;
+    while (true) {
+        confirmPassword = prompt("Confirm Password");
+        if (confirmPassword === null || confirmPassword.toLowerCase() === "exit") {
+            return;
+        }
+        if (password !=== confirmPassword) {
+            alert("Password Confirmation Failed");
+            continue;
+        }
+        break;
+    }
+
+    // * ========================================== enter the users bank balance ====================================
+
+    let balance = Number(
+        prompt("Initial Balance")
+    );
+
+    // *========================================== save user information in an array=======================================
+    users.push({
+        fullName,
+        email,
+        age,
+        password,
+        balance,
+    });
+    alert("Account Created Success fully");
+    console.log("Account Created Successfully");
+}
