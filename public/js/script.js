@@ -211,6 +211,54 @@ function login() {
     alert("Login Success");
 }
 
+// !======================================================== this is for change password ====================================
+function changePassword() {
+
+// *================================ this is for email =======================================
+    let email = prompt("Enter Email");
+    if (email === null || email.trim().toLowerCase() === "exit") {
+        return;
+    }
+    email = email.trim().toLowerCase();
+    let user = users.find(user => user.email === email);
+    if (!user) {
+        alert("Email Not Found");
+        return;
+    }
+
+    // *================================ this is for old password =======================================
+    let oldPassword = prompt("Enter Current Password");
+    if (oldPassword === null || oldPassword.toLowerCase() === "exit") {
+        return;
+    }
+    if (oldPassword !== user.password) {
+        alert("Wrong Current Password");
+        return;
+    }
+// *================================ this is for new password =======================================
+    let newPassword = prompt("Enter New Password");
+    if (newPassword === null || newPassword.toLowerCase() === "exit") {
+        return;
+    }
+    if (!validatePassword(newPassword)) {
+        alert("Invalid Password");
+        return;
+    }
+// *================================ this is for confirm new password =======================================
+    let confirmPassword = prompt("Confirm New Password");
+    if (confirmPassword === null || confirmPassword.toLowerCase() === "exit") {
+        return;
+    }
+    if (newPassword !== confirmPassword) {
+        alert("Password Confirmation Failed");
+        return;
+    }
+// *================================ this is for roplace the old code with the new code =======================================
+    user.password = newPassword;
+    user.history.push("Password Changed");
+    alert("Password Updated Successfully");
+}
+
 // !============================================ Main menu loop (keeps asking the user for choices) ==================================================
 
 while (true) {
@@ -232,7 +280,7 @@ while (true) {
     }
 
     else if (choice === "3") {
-
+        changePassword()
 
     }
     else {
