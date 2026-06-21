@@ -110,6 +110,7 @@ function signUp() {
     let email;
     while (true) {
         email = prompt("Enter your Email");
+        email = email.trim().toLowerCase();
         if (email === null || email.toLowerCase() === "exit") {
             return;
         }
@@ -162,7 +163,7 @@ function signUp() {
         if (confirmPassword === null || confirmPassword.toLowerCase() === "exit") {
             return;
         }
-        if (password !=== confirmPassword) {
+        if (password !== confirmPassword) {
             alert("Password Confirmation Failed");
             continue;
         }
@@ -186,3 +187,28 @@ function signUp() {
     alert("Account Created Success fully");
     console.log("Account Created Successfully");
 }
+
+// !============================================ this is for logging into the account ==================================================
+
+function login() {
+
+    // * ========================================== this is for email ====================================
+    let email = prompt("Email").trim().toLowerCase();
+    let user = users.find(
+        user => user.email === email
+    );
+    if (!user) {
+        alert("Email Not Found");
+        return;
+    }
+
+    // * ========================================== this is for password ====================================
+    let password = prompt("Password");
+    if (user.password !== password) {
+        alert("Wrong Password");
+        return;
+    }
+    alert("Login Success");
+}
+
+
