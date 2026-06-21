@@ -430,6 +430,15 @@ function applyInvestmentProfit(user) {
     user.history.push("Investment Profit: " + profit + " DH");
 }
 
+// !============================== this is for storing all user transactions history ====================================
+function showHistory(user) {
+
+    if (user.history.length === 0) {
+        alert("No History");
+        return;
+    }
+    alert(user.history.join("\n"));
+}
 // !============================================ Main menu loop (keeps asking the user for choices) ==================================================
 
 while (true) {
