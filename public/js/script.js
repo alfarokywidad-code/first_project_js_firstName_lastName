@@ -269,7 +269,7 @@ function changePassword() {
 // !=============================================== This is main dashboard after login: handles all banking operations =================
 
 function dashboard(user) {
-currentUser = user;
+    currentUser = user;
     while (currentUser) {
         let choice = prompt(`Balance: ${currentUser.balance}
 1. Withdraw Money
@@ -293,6 +293,7 @@ currentUser = user;
 }
 
 // !============================================ allow users to withdraw money from account balance =====================
+
 function withdrawMoney(user) {
     let amount = prompt("Amount To Withdraw");
     if (amount === null || amount.toLowerCase() === "exit") {
@@ -313,6 +314,30 @@ function withdrawMoney(user) {
     console.log(`New balance: ${user.balance}`);
     alert("Withdraw Successful");
 }
+
+// !============================================ this is for deposit money ==================================
+
+function depositMoney(user) {
+    let amount = prompt("Amount To Deposit");
+    if (amount === null || amount.toLowerCase() === "exit") {
+        return;
+    }
+    amount = Number(amount);
+    if (isNaN(amount) || amount <= 0) {
+        alert("Invalid Amount");
+        return;
+    }
+    if (amount > 1000) {
+        alert("Maximum Deposit = 1000 DH");
+        return;
+    }
+    user.balance += amount;
+    user.history.push(`Deposit: ${amount} DH`);
+    console.log(`Deposit: ${amount} DH`);
+    console.log(`New balance: ${user.balance}`);
+    alert("Deposit Successful");
+}
+
 
 // !============================================ Main menu loop (keeps asking the user for choices) ==================================================
 
