@@ -1,5 +1,6 @@
 
 let users = [];
+let currentUser = null;
 
 // !============================== this is for validate Name ====================================
 
@@ -183,6 +184,11 @@ function signUp() {
         age,
         password,
         balance,
+        loan: 0,
+        loanPaid: 0,
+        investedAmount: 0,
+        investmentReturned: 0,
+        history: []
     });
     alert("Account Created Success fully");
     console.log("Account Created Successfully");
@@ -209,12 +215,14 @@ function login() {
         return;
     }
     alert("Login Success");
+    currentUser = user;
+    dashboard(user);
 }
 
 // !======================================================== this is for change password ====================================
 function changePassword() {
 
-// *================================ this is for email =======================================
+    // *================================ this is for email =======================================
     let email = prompt("Enter Email");
     if (email === null || email.trim().toLowerCase() === "exit") {
         return;
@@ -235,7 +243,7 @@ function changePassword() {
         alert("Wrong Current Password");
         return;
     }
-// *================================ this is for new password =======================================
+    // *================================ this is for new password =======================================
     let newPassword = prompt("Enter New Password");
     if (newPassword === null || newPassword.toLowerCase() === "exit") {
         return;
@@ -244,7 +252,7 @@ function changePassword() {
         alert("Invalid Password");
         return;
     }
-// *================================ this is for confirm new password =======================================
+    // *================================ this is for confirm new password =======================================
     let confirmPassword = prompt("Confirm New Password");
     if (confirmPassword === null || confirmPassword.toLowerCase() === "exit") {
         return;
@@ -253,10 +261,35 @@ function changePassword() {
         alert("Password Confirmation Failed");
         return;
     }
-// *================================ this is for roplace the old code with the new code =======================================
+    // *================================ this is for roplace the old code with the new code =======================================
     user.password = newPassword;
     user.history.push("Password Changed");
     alert("Password Updated Successfully");
+}
+// !=============================================== This is main dashboard after login: handles all banking operations =================
+
+function dashboard(user) {
+currentUser = user;
+    while (currentUser) {
+        let choice = prompt(`Balance: ${currentUser.balance}
+1. Withdraw Money
+2. Deposit Money
+3. Take Loan
+4. Invest
+5. History
+6. Logout`);
+        if (choice === "1") withdrawMoney(currentUser);
+        else if (choice === "2") depositMoney(currentUser);
+        else if (choice === "3") takeLoan(currentUser);
+        else if (choice === "4") investMoney(currentUser);
+        else if (choice === "5") showHistory(currentUser);
+        else if (choice === "6") {
+            currentUser = null;
+            alert("Logged out");
+            return;
+        }
+        else alert("Invalid choice");
+    }
 }
 
 // !============================================ Main menu loop (keeps asking the user for choices) ==================================================
@@ -272,13 +305,10 @@ while (true) {
     if (choice === "1") {
         signUp()
     }
-
-
     else if (choice === "2") {
         login()
 
     }
-
     else if (choice === "3") {
         changePassword()
 
