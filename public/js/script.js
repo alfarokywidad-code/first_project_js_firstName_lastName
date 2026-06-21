@@ -292,6 +292,28 @@ currentUser = user;
     }
 }
 
+// !============================================ allow users to withdraw money from account balance =====================
+function withdrawMoney(user) {
+    let amount = prompt("Amount To Withdraw");
+    if (amount === null || amount.toLowerCase() === "exit") {
+        return;
+    }
+    amount = Number(amount);
+    if (isNaN(amount) || amount <= 0) {
+        alert("Invalid Amount");
+        return;
+    }
+    if (amount > user.balance) {
+        alert("Insufficient Funds");
+        return;
+    }
+    user.balance -= amount;
+    user.history.push(`Withdraw: ${amount} DH`);
+    console.log(`Withdraw: ${amount} DH`);
+    console.log(`New balance: ${user.balance}`);
+    alert("Withdraw Successful");
+}
+
 // !============================================ Main menu loop (keeps asking the user for choices) ==================================================
 
 while (true) {
