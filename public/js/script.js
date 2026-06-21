@@ -217,6 +217,7 @@ function login() {
     alert("Login Success");
     currentUser = user;
     applyLoanPenalty(user);
+    applyInvestmentProfit(user);
     dashboard(user);
 }
 
@@ -352,7 +353,7 @@ function takeLoan(user) {
         return;
     }
     amount = Number(amount);
-    if (isNaN(amount) ||amount <= 0 || amount > maxLoan ) {
+    if (isNaN(amount) || amount <= 0 || amount > maxLoan) {
         alert("Invalid Loan Amount");
         return;
     }
@@ -389,6 +390,45 @@ function applyLoanPenalty(user) {
     }
 }
 
+// !============================================ This function handles user investment process ==================================
+function investMoney(user) {
+    let amount = prompt("Investment Amount");
+    if (amount === null || amount.toLowerCase() === "exit") {
+        return;
+    }
+    amount = Number(amount);
+    if (isNaN(amount) || amount <= 0 || amount > user.balance) {
+        alert("Invalid Amount");
+        return;
+    }
+    user.balance -= amount;
+    user.investedAmount += amount;
+    user.history.push(
+        "Invested : " +
+        amount +
+        " DH");
+
+    alert("Investment Added");
+}
+// !============================================  tis is for Applies 20% investment profit up to 120% ==================================
+function applyInvestmentProfit(user) {
+    if (user.investedAmount <= 0) {
+        return;
+    }
+    let maxProfit = user.investedAmount * 1.2;
+    if (user.investmentReturned >= maxProfit) {
+        return;
+    }
+    let profit = user.investedAmount * 0.2;
+    user.investmentStep++;
+    let totalPossible = user.investmentStep * profit;
+    if (totalPossible > maxProfit) {
+        profit = maxProfit - user.investmentReturned;
+    }
+    user.balance += profit;
+    user.investmentReturned += profit;
+    user.history.push("Investment Profit: " + profit + " DH");
+}
 
 // !============================================ Main menu loop (keeps asking the user for choices) ==================================================
 
