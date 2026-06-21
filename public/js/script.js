@@ -211,4 +211,33 @@ function login() {
     alert("Login Success");
 }
 
+// !============================================ Main menu loop (keeps asking the user for choices) ==================================================
+
+while (true) {
+
+    let choice = prompt(`
+1. Sign Up
+2. Login
+3. Change Password
+`);
+
+    if (choice === "1") {
+        signUp()
+    }
+
+
+    else if (choice === "2") {
+        login()
+
+    }
+
+    else if (choice === "3") {
+
+
+    }
+    else {
+        alert("Invalid choice");
+    }
+}
+
 
