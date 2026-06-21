@@ -266,6 +266,8 @@ function changePassword() {
     // *================================ this is for roplace the old code with the new code =======================================
     user.password = newPassword;
     user.history.push("Password Changed");
+    console.log("Password Updated Successfully");
+    
     alert("Password Updated Successfully");
 }
 // !=============================================== This is main dashboard after login: handles all banking operations =================
@@ -303,6 +305,8 @@ function withdrawMoney(user) {
     }
     amount = Number(amount);
     if (isNaN(amount) || amount <= 0) {
+        console.log("Invalid Amount");
+        
         alert("Invalid Amount");
         return;
     }
@@ -314,6 +318,7 @@ function withdrawMoney(user) {
     user.history.push(`Withdraw: ${amount} DH`);
     console.log(`Withdraw: ${amount} DH`);
     console.log(`New balance: ${user.balance}`);
+    console.log("Withdraw Successful");
     alert("Withdraw Successful");
 }
 
@@ -326,6 +331,8 @@ function depositMoney(user) {
     }
     amount = Number(amount);
     if (isNaN(amount) || amount <= 0) {
+        console.log("Invalid Amount");
+        
         alert("Invalid Amount");
         return;
     }
@@ -337,6 +344,8 @@ function depositMoney(user) {
     user.history.push(`Deposit: ${amount} DH`);
     console.log(`Deposit: ${amount} DH`);
     console.log(`New balance: ${user.balance}`);
+    console.log("Deposit Successful");
+    
     alert("Deposit Successful");
 }
 
@@ -345,6 +354,8 @@ function takeLoan(user) {
 
     if (user.loan > 0) {
         alert("You already have a loan");
+        console.log("You already have a loan");
+        
         return;
     }
     let maxLoan = user.balance * 0.2;
@@ -355,6 +366,8 @@ function takeLoan(user) {
     amount = Number(amount);
     if (isNaN(amount) || amount <= 0 || amount > maxLoan) {
         alert("Invalid Loan Amount");
+        console.log("Invalid Loan Amount");
+        
         return;
     }
     user.loan = amount;
@@ -366,6 +379,8 @@ function takeLoan(user) {
         " DH"
     );
     alert("Loan Approved");
+    console.log("Loan Approved");
+    
 }
 
 // !============================================ Apply 10% loan deduction per login ==================================
@@ -405,10 +420,10 @@ function investMoney(user) {
     user.investedAmount += amount;
     user.history.push(
         "Invested : " +
-        amount +
-        " DH");
-
+        amount + " DH");
     alert("Investment Added");
+    console.log("Investment Added");
+    
 }
 // !============================================  tis is for Applies 20% investment profit up to 120% ==================================
 function applyInvestmentProfit(user) {
@@ -434,12 +449,18 @@ function applyInvestmentProfit(user) {
 function showHistory(user) {
 
     if (user.history.length === 0) {
+        console.log("No History");
         alert("No History");
         return;
     }
+console.log("History:");
+console.log(user.history.join("\n"));
+
     alert(user.history.join("\n"));
+    
 }
 // !============================================ Main menu loop (keeps asking the user for choices) ==================================================
+console.log(users);
 
 while (true) {
 
@@ -447,6 +468,7 @@ while (true) {
 1. Sign Up
 2. Login
 3. Change Password
+4. Exit Program
 `);
 
     if (choice === "1") {
@@ -460,9 +482,16 @@ while (true) {
         changePassword()
 
     }
+        else if (choice === "4") {
+        alert("Program Closed");
+        console.log("User exited program");
+        break;
+
+    }
     else {
         alert("Invalid choice");
     }
 }
+
 
 
