@@ -216,6 +216,7 @@ function login() {
     }
     alert("Login Success");
     currentUser = user;
+    applyLoanPenalty(user);
     dashboard(user);
 }
 
@@ -336,6 +337,56 @@ function depositMoney(user) {
     console.log(`Deposit: ${amount} DH`);
     console.log(`New balance: ${user.balance}`);
     alert("Deposit Successful");
+}
+
+// !============================================ Take loan (20% max of balance) ==================================
+function takeLoan(user) {
+
+    if (user.loan > 0) {
+        alert("You already have a loan");
+        return;
+    }
+    let maxLoan = user.balance * 0.2;
+    let amount = prompt(`Max Loan = ${maxLoan}`);
+    if (amount === null || amount.toLowerCase() === "exit") {
+        return;
+    }
+    amount = Number(amount);
+    if (isNaN(amount) ||amount <= 0 || amount > maxLoan ) {
+        alert("Invalid Loan Amount");
+        return;
+    }
+    user.loan = amount;
+    user.loanPaid = 0;
+    user.balance += amount;
+    user.history.push(
+        "Loan Taken : " +
+        amount +
+        " DH"
+    );
+    alert("Loan Approved");
+}
+
+// !============================================ Apply 10% loan deduction per login ==================================
+function applyLoanPenalty(user) {
+    if (user.loan <= 0) {
+        return;
+    }
+    let deduction = user.loan * 0.1;
+    if (user.loanPaid + deduction > user.loan) {
+        deduction = user.loan - user.loanPaid;
+    }
+    user.balance -= deduction;
+    user.loanPaid += deduction;
+    user.history.push(
+        "Loan Deduction : " +
+        deduction +
+        " DH"
+    );
+    if (user.loanPaid >= user.loan) {
+        user.loan = 0;
+        user.loanPaid = 0;
+    }
 }
 
 
